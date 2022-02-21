@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package io.wcm.maven.release.policies.versionwithsuffixversion;
+package io.wcm.maven.release.policies.oddevenwithsuffixversion;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

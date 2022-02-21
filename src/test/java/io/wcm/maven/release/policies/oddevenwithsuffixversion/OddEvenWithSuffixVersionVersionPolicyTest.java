@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package io.wcm.maven.release.policies.versionwithsuffixversion;
+package io.wcm.maven.release.policies.oddevenwithsuffixversion;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -28,25 +28,25 @@ import org.apache.maven.shared.release.policy.version.VersionPolicyResult;
 import org.apache.maven.shared.release.versions.VersionParseException;
 import org.junit.jupiter.api.Test;
 
-class VersionWithSuffixVersionVersionPolicyTest {
+class OddEvenWithSuffixVersionVersionPolicyTest {
 
   @Test
   void testGetReleaseVersion() throws PolicyException, VersionParseException {
     VersionPolicyRequest request = new VersionPolicyRequest()
-        .setVersion("1.10.0-2.17.12-SNAPSHOT");
+        .setVersion("1.10.1-2.17.12-SNAPSHOT");
 
-    VersionPolicyResult result = new VersionWithSuffixVersionVersionPolicy().getReleaseVersion(request);
+    VersionPolicyResult result = new OddEvenWithSuffixVersionVersionPolicy().getReleaseVersion(request);
 
-    assertEquals("1.10.0-2.17.12", result.getVersion());
+    assertEquals("1.10.2-2.17.12", result.getVersion());
   }
 
   @Test
   void testGetReleaseVersion_NotSnapshot() {
     VersionPolicyRequest request = new VersionPolicyRequest()
-        .setVersion("1.10.0-2.17.12");
+        .setVersion("1.10.1-2.17.12");
 
     assertThrows(PolicyException.class, () -> {
-      new VersionWithSuffixVersionVersionPolicy().getReleaseVersion(request);
+      new OddEvenWithSuffixVersionVersionPolicy().getReleaseVersion(request);
     });
   }
 
@@ -55,7 +55,7 @@ class VersionWithSuffixVersionVersionPolicyTest {
     VersionPolicyRequest request = new VersionPolicyRequest()
         .setVersion("1.10.0-2.17.12");
 
-    VersionPolicyResult result = new VersionWithSuffixVersionVersionPolicy().getDevelopmentVersion(request);
+    VersionPolicyResult result = new OddEvenWithSuffixVersionVersionPolicy().getDevelopmentVersion(request);
 
     assertEquals("1.10.1-2.17.12-SNAPSHOT", result.getVersion());
   }
@@ -66,7 +66,7 @@ class VersionWithSuffixVersionVersionPolicyTest {
         .setVersion("1.10.1-2.17.12-SNAPSHOT");
 
     assertThrows(PolicyException.class, () -> {
-      new VersionWithSuffixVersionVersionPolicy().getDevelopmentVersion(request);
+      new OddEvenWithSuffixVersionVersionPolicy().getDevelopmentVersion(request);
     });
   }
 

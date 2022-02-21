@@ -30,20 +30,20 @@
   </parent>
 
   <groupId>io.wcm.maven.release-policies</groupId>
-  <artifactId>io.wcm.maven.release-policies.version-with-suffix-version</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <artifactId>io.wcm.maven.release-policies.oddeven-with-suffix-version</artifactId>
+  <version>1.0.0</version>
   <packaging>jar</packaging>
 
-  <name>wcm.io Maven Release Policy for Versions with a suffixed Version</name>
+  <name>wcm.io Maven Release Policy for Odd-Even Versions with a suffixed Version</name>
   <description>
     Manages release versionining of versions with a suffix version, e.g. 1.10.0-2.17.12.
     The policy manages only the first part, 1.10.0 in this example, and keeps the suffixed version untouched.
   </description>
 
   <scm>
-    <connection>scm:git:https://github.com/wcm-io/io.wcm.maven.release-policies.version-with-suffix-version.git</connection>
-    <developerConnection>scm:git:https://github.com/wcm-io/io.wcm.maven.release-policies.version-with-suffix-version.git</developerConnection>
-    <url>https://github.com/wcm-io/io.wcm.maven.release-policies.version-with-suffix-version</url>
+    <connection>scm:git:https://github.com/wcm-io/io.wcm.maven.release-policies.oddeven-with-suffix-version.git</connection>
+    <developerConnection>scm:git:https://github.com/wcm-io/io.wcm.maven.release-policies.oddeven-with-suffix-version.git</developerConnection>
+    <url>https://github.com/wcm-io/io.wcm.maven.release-policies.oddeven-with-suffix-version</url>
     <tag>HEAD</tag>
   </scm>
 
@@ -59,14 +59,20 @@
     <dependency>
       <groupId>org.apache.maven.release</groupId>
       <artifactId>maven-release-api</artifactId>
-      <scope>compile</scope>
       <version>3.0.0-M5</version>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.maven.release</groupId>
-      <artifactId>maven-release-manager</artifactId>
-      <scope>compile</scope>
+      <artifactId>maven-release-oddeven-policy</artifactId>
       <version>3.0.0-M5</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.12.0</version>
+      <scope>compile</scope>
     </dependency>
 
     <dependency>
