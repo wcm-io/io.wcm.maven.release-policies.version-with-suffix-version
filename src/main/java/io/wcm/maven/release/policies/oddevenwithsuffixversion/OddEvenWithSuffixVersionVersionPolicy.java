@@ -17,13 +17,14 @@
  * limitations under the License.
  * #L%
  */
-package io.wcm.maven.release.policies.versionwithsuffixversion;
+package io.wcm.maven.release.policies.oddevenwithsuffixversion;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.shared.release.policy.PolicyException;
+import org.apache.maven.shared.release.policy.oddeven.OddEvenVersionPolicy;
 import org.apache.maven.shared.release.policy.version.VersionPolicy;
 import org.apache.maven.shared.release.policy.version.VersionPolicyRequest;
 import org.apache.maven.shared.release.policy.version.VersionPolicyResult;
-import org.apache.maven.shared.release.versions.DefaultVersionInfo;
 import org.apache.maven.shared.release.versions.VersionParseException;
 import org.codehaus.plexus.component.annotations.Component;
 
@@ -36,7 +37,9 @@ import org.codehaus.plexus.component.annotations.Component;
     role = VersionPolicy.class,
     hint = "VersionWithSuffixVersionVersionPolicy",
     description = "Manages versions with a suffixed version")
-public class VersionWithSuffixVersionVersionPolicy implements VersionPolicy {
+public class OddEvenWithSuffixVersionVersionPolicy implements VersionPolicy {
+
+  private final VersionPolicy oddEvenVersionPolicy = new OddEvenVersionPolicy();
 
   @Override
   public VersionPolicyResult getReleaseVersion(VersionPolicyRequest request) throws PolicyException, VersionParseException {
@@ -46,9 +49,11 @@ public class VersionWithSuffixVersionVersionPolicy implements VersionPolicy {
       throw new PolicyException("Version is not a snapshot version: " + request.getVersion());
     }
 
-    // return same version without snapshot
+    // increment only main version
+    String nextMainVersion = oddEvenVersionPolicy.getReleaseVersion(new VersionPolicyRequest()
+        .setVersion(version.getMainVersion() + "-SNAPSHOT")).getVersion();
     return new VersionPolicyResult().setVersion(
-        new VersionWithSuffixVersion(version.getMainVersion(), version.getSuffixVersion(), false).toString());
+        new VersionWithSuffixVersion(nextMainVersion, version.getSuffixVersion(), false).toString());
   }
 
   @Override
@@ -60,7 +65,8 @@ public class VersionWithSuffixVersionVersionPolicy implements VersionPolicy {
     }
 
     // return next main version with snapshot
-    String nextMainVersion = new DefaultVersionInfo(version.getMainVersion()).getNextVersion().getReleaseVersionString();
+    String nextMainVersion = StringUtils.removeEnd(oddEvenVersionPolicy.getDevelopmentVersion(new VersionPolicyRequest()
+        .setVersion(version.getMainVersion())).getVersion(), "-SNAPSHOT");
     return new VersionPolicyResult().setVersion(
         new VersionWithSuffixVersion(nextMainVersion, version.getSuffixVersion(), true).toString());
   }
