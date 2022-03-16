@@ -20,7 +20,6 @@
 package io.wcm.maven.release.policies.oddevenwithsuffixversion;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.apache.maven.shared.release.policy.PolicyException;
 import org.apache.maven.shared.release.policy.version.VersionPolicyRequest;
@@ -41,13 +40,13 @@ class OddEvenWithSuffixVersionVersionPolicyTest {
   }
 
   @Test
-  void testGetReleaseVersion_NotSnapshot() {
+  void testGetReleaseVersion_NotSnapshot() throws PolicyException, VersionParseException {
     VersionPolicyRequest request = new VersionPolicyRequest()
         .setVersion("1.10.1-2.17.12");
 
-    assertThrows(PolicyException.class, () -> {
-      new OddEvenWithSuffixVersionVersionPolicy().getReleaseVersion(request);
-    });
+    VersionPolicyResult result = new OddEvenWithSuffixVersionVersionPolicy().getReleaseVersion(request);
+
+    assertEquals("1.10.2-2.17.12", result.getVersion());
   }
 
   @Test
@@ -61,13 +60,13 @@ class OddEvenWithSuffixVersionVersionPolicyTest {
   }
 
   @Test
-  void testGetDevelopmentVersion_Snapshot() {
+  void testGetDevelopmentVersion_Snapshot() throws PolicyException, VersionParseException {
     VersionPolicyRequest request = new VersionPolicyRequest()
         .setVersion("1.10.1-2.17.12-SNAPSHOT");
 
-    assertThrows(PolicyException.class, () -> {
-      new OddEvenWithSuffixVersionVersionPolicy().getDevelopmentVersion(request);
-    });
+    VersionPolicyResult result = new OddEvenWithSuffixVersionVersionPolicy().getDevelopmentVersion(request);
+
+    assertEquals("1.10.3-2.17.12-SNAPSHOT", result.getVersion());
   }
 
 }

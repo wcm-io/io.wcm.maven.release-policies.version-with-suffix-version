@@ -45,10 +45,6 @@ public class OddEvenWithSuffixVersionVersionPolicy implements VersionPolicy {
   public VersionPolicyResult getReleaseVersion(VersionPolicyRequest request) throws PolicyException, VersionParseException {
     VersionWithSuffixVersion version = VersionWithSuffixVersion.parse(request.getVersion());
 
-    if (!version.isSnapshot()) {
-      throw new PolicyException("Version is not a snapshot version: " + request.getVersion());
-    }
-
     // increment only main version
     String nextMainVersion = oddEvenVersionPolicy.getReleaseVersion(new VersionPolicyRequest()
         .setVersion(version.getMainVersion() + "-SNAPSHOT")).getVersion();
@@ -59,10 +55,6 @@ public class OddEvenWithSuffixVersionVersionPolicy implements VersionPolicy {
   @Override
   public VersionPolicyResult getDevelopmentVersion(VersionPolicyRequest request) throws PolicyException, VersionParseException {
     VersionWithSuffixVersion version = VersionWithSuffixVersion.parse(request.getVersion());
-
-    if (version.isSnapshot()) {
-      throw new PolicyException("Version is not a release version: " + request.getVersion());
-    }
 
     // return next main version with snapshot
     String nextMainVersion = StringUtils.removeEnd(oddEvenVersionPolicy.getDevelopmentVersion(new VersionPolicyRequest()
