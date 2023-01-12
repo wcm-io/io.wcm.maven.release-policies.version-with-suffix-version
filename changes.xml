@@ -27,9 +27,6 @@
       <action type="update" dev="sseifert">
         Make compatible with maven-release-api 3.0.0-M7.
       </action>
-      <action type="update" dev="sseifert">
-        Switch to Java 11 as minimum version.
-      </action>
     </release>
 
     <release version="1.0.2" date="2022-03-16">
