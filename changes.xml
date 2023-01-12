@@ -23,6 +23,12 @@
     xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/plugins/maven-changes-plugin/xsd/changes-1.0.0.xsd">
   <body>
 
+    <release version="1.0.4" date="2023-01-12">
+      <action type="update" dev="sseifert">
+        Make compatible with maven-release-api 3.0.0-M7.
+      </action>
+    </release>
+
     <release version="1.0.2" date="2022-03-16">
       <action type="fix" dev="sseifert">
         Remove check of existing snapshot/non-snapshot version.
